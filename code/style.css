@@ -1,0 +1,89 @@
+/*page*/
+body
+{ 
+	color: black;
+	background: url("greyzz.png");
+
+	font-family: "Arial", "Times New Roman", sans-serif;
+	font-weight: normal;
+    font-style: normal;
+
+    word-wrap: break-word;
+    max-width: 100%;
+	white-space: normal;
+	
+    text-align: justify;
+    font-size: 20px;
+}
+#bloc_page
+{
+	display: flex;
+    flex-direction: column;
+}
+
+#bloc_content
+{
+	display: flex;
+    flex-direction: column;
+}
+
+#bloc_form
+{
+	display: flex;
+    flex-direction: column;
+}
+
+#bloc_proj_non_fini
+{
+	display: flex;
+	justify-content: space-around;
+}
+
+#bloc_td
+{
+	max-width: 100%;
+	white-space: normal;
+}
+
+
+#bloc_green
+{
+	max-width: 100%;
+	white-space: normal;
+	color: green;
+}
+
+
+#bloc_orange
+{
+	max-width: 100%;
+	white-space: normal;
+	color: orange;
+}
+
+#bloc_red
+{
+	max-width: 100%;
+	white-space: normal;
+	color: red;
+}
+
+/*lisere*/
+#lisere
+{
+    width: auto;
+    height: 50px;
+    background-image: url('lodyas.png');
+	border-radius: 10px;
+}
+
+/*Header*/
+header
+{
+	text-align: center;
+}
+header h1
+{
+	font-weight: bold;
+	font-size: xx-large;
+}

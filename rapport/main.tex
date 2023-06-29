@@ -1,0 +1,150 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[french]{babel}
+\usepackage{graphicx} 
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{amsmath} 
+\usepackage{amsfonts}
+\usepackage{hyperref}
+\usepackage{array,booktabs,makecell,multirow}
+\usepackage{siunitx}
+\usepackage[left=2cm, right=2cm, bottom=2cm, top=2cm]{geometry}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+\includegraphics[scale = 0.35]{logo.jpg}\\
+\vspace{1cm}
+\textsc{\huge Université de Liège}\\[1.2cm]
+\HRule \\[1cm]
+\textsc{\LARGE Bases de données (INFO0009-A-B) }\\[1cm]
+{\Huge \bfseries Projet 2021-2022 – Deuxième Partie : Un système de gestion de projets}\\[1.4cm] 
+\HRule \\[1cm]
+\end{center}
+
+\begin{minipage}{0.45\linewidth}
+      \begin{flushleft} \large
+        \emph{Auteurs : } \\
+        Ramzan \textsc{Arsanov}  s194447\\
+        Louis \textsc{Hogge}  s192814\\
+        Emilien \textsc{Leclerc}  s190701 
+      \end{flushleft}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+      \begin{flushright} \large
+        \emph{Professeur : } C. \textsc{Debruyne}\\
+        \emph{Année : } 2021-2022 
+      \end{flushright}
+\end{minipage}
+
+\end{titlepage}
+
+\newpage
+\section{Description de l'architecture du site Web}
+
+Après s'être connecté au site grâce à un nom d'utilisateur et un mot de passe, on peut accéder au menu principal et sélectionner le menu qu'on souhaite utiliser. Il y en a un total de 8 qui sont:\\
+\begin{enumerate}
+
+    \item \textbf{Affichage tables :}\\
+Permet d'accéder à chaque table de la base de données grâce à une liste déroulante. Après avoir sélectionné une table, on peut filtrer ses différentes données en contraignant un ou plusieurs champs.\\
+
+\item \textbf{Affichage projets :}\\
+Permet de sélectionner un projet dans une liste déroulante pour afficher les tuples qu'il contient.\\
+
+\item \textbf{Ajouts fonctions/employés/projets :}\\
+Permet de sélectionner une table dans une liste déroulante parmi : FONCTION, EMPLOYE ou PROJET. Ensuite, on affiche les tuples déjà présent dans la table, et il est possible d'y créer de nouveaux tuples à l'aide d'un formulaire.\\
+
+\item \textbf{Modification informations employés :}\\
+La table EMPLOYE s'affiche et il est possible de modifier, pour un certain NO choisit dans une liste déroulante, son nom de département et son nom de fonction à l'aide de listes déroulantes (qui affichent que les valeurs présentent dans ces tables).\\
+
+\item \textbf{Création tâches :}\\
+Permet de sélectionner un projet dans une liste déroulante. Si il est terminé, ses détails sont affiché et une couleur également. Cette couleur est verte si le coût est inférieure ou égale au budget, orange si le coût dépasse le budget de au plus $10\%$ ou rouge dans les autres cas.\\
+Si il n'est pas terminé, on peut ajouter un certain nombre d'heure à la tâche d'un employé travaillant sur ce projet choisit dans une liste déroulante. On peut également ajouter au projet un employé, qui n'a pas encore de tâche dans ce projet, choisit dans une liste déroulante. On peut aussi choisir de terminer le projet, il faudra donc sélectionner un expert parmi une liste déroulante des employés qui ne travaillent pas sur ce projet et qui n'en sont pas le chef; le budget sera demandé si il n'est pas encore connu. Si un expert est désigné, on peut choisir de remplir le commentaire et de sélectionner l'avis de l'évaluation.\\
+
+\item \textbf{Employés du mois :}\\
+Permet de visualiser le nom des employés qui ont participé à tous les projets, avec leurs fonctions et leurs rôles pour chaque projets.\\
+
+\item \textbf{Tableau de bord projets :}\\
+Permet de visualiser le nom des projets avec leur date de début, leur statut, leur budget, leur coût et le nombre total d'heure effectuée par leurs employés. Le tableau est trié par les dates de début des projets mais par leur nom si des dates sont similaires.\\
+
+\item \textbf{Tableau de bord employés :}\\
+Permet de visualiser le NO et le nom de chaque employé; avec leur total, leur moyenne, leur minimum et leur maximum des heures passées sur des projets. Pour chaque employé, leur nombre de projets est également afficher.\\
+
+\end{enumerate}
+
+
+\section{Description des manipulations effectuées pour initialiser la base de
+données à partir des scripts soumis}
+
+Toute l'initialisation de la base en contenue dans un seul fichier, le fichier Initialisation.sql\\
+Il suffit donc d'exécuter le script qui y est contenu pour initialiser la base de données.\\
+Cependant, la base de données doit être vide avant initialisation pour garantir la bonne création des tables.\\
+
+
+\section{Requêtes utilisées pour répondre à la question 2}
+
+\begin{enumerate}
+
+\item
+On fait la sélection de toutes les tuples où les éléments correspondent aux données rentrées par l'utilisateur.\\
+\item
+On fait une sélection en prenant une jointure sur les attributs NO des employés de la table EMPLOYE avec ceux correspondants de la table TACHE, dans le but de pouvoir obtenir les attributs NOM de la table EMPLOYE correspondants.\\
+Puis on fait une jointure sur les attributs NOM de la table FONCTION avec ceux correspondants de EMPLOYE, dans le but d'obtenir le TAUX\_HORAIRE correspondant.\\
+Le tout uniquement pour l'attribut PROJET de la table TACHE correspondant à celui demandé.\\
+On peut calculer le coût grâce à l'attribut NOMBRE\_HEURES pris dans le table TACHE, multiplié par le TAUX\_HORAIRE.\\
+
+\item
+Pour l'ajout dans la table FONCTION, il n'y a pas de clé lié, donc aucune autre manipulation n'est nécessaire.\\
+Pour l'ajout dans la table EMPLOYE, dans le cas où l'employé en est lié, il faut que l'attribut NOM\_DEPARTEMENT et l'attribut NOM\_FONCTION existent dans leur TABLE correspondante car c'est des clés liées . On insert dans la table DEPARTEMENT et/ou la table FONCTION le nom uniquement si la valeur n'y est pas encore présente.\\
+Pour l'ajout dans la table PROJET, il faut de même que l'attribut DEPARTEMENT associé à la nouvelle valeur existe. Et donc on l'insert dans la table DEPARTEMENT si elle n'existe pas encore. Pour la liste déroulante de CHEF, on fait une sélection des NO de EMPLOYE qui ont une fonction et un département.\\
+Pour compléter les informations de le table EMPLOYE, chaque liste déroulante des attributs de EMPLOYE est confectionnée par une sélection parmi les attributs déjà existants.\\
+
+\item
+Grâce à une sélection, on obtient l'attribut DATE\_FIN sur la table PROJET où l'attribut NOM est connu. On peut déterminer que le projet est terminé si il existe une date ou que le projet n'est pas encore terminé si la date n'existe pas.\\
+    \begin{enumerate}
+	\item
+	On obtient l'attribut BUDGET et l'attribut COUT grâce à une sélection sur la table PROJET où on connaît son attribut NOM.\\
+	On crée 3 variables (green, orange et red) dont celle où la condition sur le budget et le coût est rempli vaudra 1, et les autre 0. On sait donc que la couleur à afficher est celle qui vaut 1.\\
+
+	\item
+	Premièrement, on fait une sélection des attributs EMPLOYE de la table TACHE où on connaît le nom du projet.\\ Ensuite on fait une sélection de l'attribut NOMBRE\_HEURES de la table TACHE où on connaît le projet mais aussi l'employé qui a été choisit dans la liste déroulante. On update alors cet attribut NOMBRE\_HEURES de l'augmentation souhaitée.\\
+	Deuxièmement, on fait une sélection des attributs NO de la table EMPLOYE qui n'appartiennent pas à la seconde sélection. Cette seconde sélection est sur les attributs NO de la table EMPLOYE qui ont subit une jointure avec ceux correspondants de la table TACHE qui ont le projet déterminé.\\
+
+	\item
+	On obtient le budget par une sélection sur la table PROJET où l'on connaît son attribut NOM. Si le projet n'a pas de budget, on demande de le remplir au préalable grâce à un update de l'attribut BUDGET de la table PROJET où on connaît le projet. Ensuite, on update l'attribut COUT et l'attribut DATE\_FIN de ce même projet.\\
+	Pour le choix de l'expert, on fait une sélection des attributs NO de la table EMPLOYE qui n'appartiennent pas, ni à la sélection des attributs NO de la table EMPLOYE qui on subit une jointure avec ceux correspondants de la table TACHE où on connaît le projet, ni à la sélection de l'attribut CHEF la table PROJET où on connaît le projet.\\
+	On peut ensuite, si besoin, insert dans la table EVALUATION les attributs COMMENTAIRES et AVIS de l'expert du projet.\\
+	
+	\end{enumerate}
+	
+\item
+On crée une table avec les trois rôles possibles : tâche, chef et expert (ça nous permettra d'intégrer ces valeurs dans des vues).\\
+On crée une première vue qui unit 3 sélection des attributs NO, des attributs NOM de la table PROJET et du rôle correspondant : une sur la table PROJET, une sur la table TACHE et une sur la table EVALUATION.\\
+On crée une seconde vue qui déterminera les attributs NO des employé qui participe à tous les projets. Pour se faire on fait une sélection des attributs NO de la table EMPLOYE qui sont dans la première vue et qui ont un nombre de projet dans la première vue égale au nombre de projet possible dans la table PROJET.\\
+Pour trouver les valeurs à renvoyer, on fait une sélection des attributs NOM et NOM\_FONCTION de la table EMPLOYE mais aussi des projet et rôle de la seconde vue. Cette sélection est faite sur la table EMPLOYE qui a subit une jointure entre son NO et ceux correspondants de la première vue, et également sur la deuxième vue qui a subit une jointure de l'attribut NO de la deuxième vue avec ceux correspondants de la première vue.\\
+
+\item
+Pour trouver les nom de projet, leur date de début et leur budget on fait une sélection sur la table PROJET, mais aussi sur la table EMPLOYE qui a subit une jointure entre ses attributs NO et ceux correspondants de la table TACHE, et sur la table FONCTION qui a subit une jointure sur ses attributs NOM et ceux correspondants dans la table EMPLOYE précédemment joint.\\  
+Avec cette sélection, on peut également trouver le coût total grâce à une somme sur le coût de chaque employé, ce dernier est déterminé par la multiplication du taux\_horaire de sa fonction par le nombre d'heure de sa tâche.\\
+Le statut d'un projet est déterminer par des conditions sur l'attribut BUDGET et sur l'attribut DATE\_FIN de ce projet, "en attente" si pas de budget ni de date de fin, "en cours de route" si un budget mais pas de date de fin et "terminé" si un budget et une date de fin.\\
+
+\item 
+On fait une sélection sur la table TACHE mais aussi sur la table EMPLOYE qui elle a subit une jointure entre ses attributs NO et ceux correspondants de la table TACHE, la sélection est groupée sur les attributs NO avec l'ordre désiré.\\
+Ce qui permet de renvoyer les attribut NO de la table TACHE et leur attribut NOM de la table EMPLOYE; suivi de la somme, de la moyenne, du minimum et du maximum sur leurs attributs NOMBRE\_HEURES de la table TACHE; finissant par le comptage de leur nombre de projet.\\
+
+\end{enumerate}
+
+
+\section{URL permettant d'accéder à la version définitive du site Web}
+\url{http://ms8db.montefiore.ulg.ac.be/s192814 }
+\end{document}
